@@ -27,15 +27,21 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Link2 } from "lucide-react";
 import { formSchema } from "@/types/url.types";
+import { useSearchParams } from "react-router-dom";
 
 type FormValues = z.infer<typeof formSchema>;
 
 export const NewLink = () => {
+  const [searchParams] = useSearchParams();
+  const urlFromDashboard = searchParams.get("url")
+    ? decodeURIComponent(searchParams.get("url")!)
+    : "";
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      originalUrl: "",
+      originalUrl: urlFromDashboard,
       customSlug: "",
       generateQrCode: false,
     },
