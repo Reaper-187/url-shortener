@@ -124,6 +124,9 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
   html {
     @apply font-mono;
   }

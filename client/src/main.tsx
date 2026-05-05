@@ -10,6 +10,7 @@ import { App } from "./App";
 import { NewLink } from "./pages/NewLink";
 import { Analytics } from "./pages/Analytics";
 import { LinkDetails } from "./pages/LinkDetails";
+import { Toaster } from "sonner";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <Toaster />
     <RouterProvider router={router} />
   </StrictMode>,
 );
