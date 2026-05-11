@@ -13,23 +13,25 @@ datasource db {
 }
 
 model ShortUrl {
-  url_id      String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String       @unique @db.VarChar(50) // Länger als 10 Zeichen
-  originalUrl String       @db.Text
-  shortCode   String       @unique
-  qrCodeUrl   String?
-  createdAt   DateTime     @default(now())
-  totalClicks Int          @default(0)
-  clickEvents ClickEvent[]
+  url_id       String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  link_name    String       @unique @db.VarChar(50) // Länger als 10 Zeichen
+  original_url String       @db.Text
+  custom_slug  String       @unique
+  qr_code      String?      @db.Text
+  created_at   DateTime     @default(now())
+  total_clicks Int          @default(0)
+  click_events ClickEvent[]
+
+  @@map("short_urls")
 }
 
 model ClickEvent {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  shortUrlId String   @map("short_url_id") @db.Uuid
-  shortUrl   ShortUrl @relation(fields: [shortUrlId], references: [url_id], onDelete: Cascade)
-  clickedAt  DateTime @default(now())
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  short_url_id String   @db.Uuid
+  short_url    ShortUrl @relation(fields: [short_url_id], references: [url_id], onDelete: Cascade)
+  clicked_at   DateTime @default(now())
 
-  @@index([shortUrlId])
-  @@index([clickedAt])
+  @@index([short_url_id])
+  @@index([clicked_at])
   @@map("click_events")
 }
